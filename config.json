@@ -1,0 +1,72 @@
+{
+  "name": "GitHub源码学习助手",
+  "id": "github-source-learning",
+  "version": "1.0.0",
+  "description": "根据GitHub链接和代码仓库，提供由浅入深、从架构到细节的交互式源码学习和设计思想分析，并支持将学习笔记转换成不同平台的文章",
+  "enabled": true,
+  "dependencies": [
+    "node.js",
+    "git",
+    "github-api"
+  ],
+  "settings": {
+    "github": {
+      "apiUrl": "https://api.github.com",
+      "timeout": 30000,
+      "maxRetries": 3,
+      "retryDelay": 1000
+    },
+    "learning": {
+      "defaultDepth": "intermediate",
+      "maxConcurrentSessions": 5,
+      "autoSaveInterval": 300000,
+      "noteRetentionDays": 90
+    },
+    "export": {
+      "defaultFormat": "markdown",
+      "supportedFormats": [
+        "markdown",
+        "blog-md",
+        "article",
+        "technical-post",
+        "summary",
+        "json",
+        "newsletter",
+        "presentation"
+      ],
+      "exportPath": "./exports",
+      "maxExportSize": 10485760
+    },
+    "security": {
+      "sanitizeInputs": true,
+      "validateUrls": true,
+      "allowLocalPaths": false
+    }
+  },
+  "endpoints": {
+    "analyze": "/api/analyze",
+    "learn": "/api/learn",
+    "note": "/api/note",
+    "export": "/api/export",
+    "qa": "/api/qa",
+    "search": "/api/search"
+  },
+  "permissions": [
+    "github:read",
+    "files:read",
+    "files:write",
+    "network:outbound"
+  ],
+  "metadata": {
+    "category": "development",
+    "complexity": "medium",
+    "estimatedTime": "20 minutes",
+    "tags": [
+      "github",
+      "source-code",
+      "learning",
+      "analysis",
+      "documentation"
+    ]
+  }
+}
