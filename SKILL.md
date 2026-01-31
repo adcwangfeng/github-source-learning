@@ -1,10 +1,11 @@
 ---
 name: GitHub源码学习助手
-description: 根据GitHub链接和代码仓库，提供由浅入深、从架构到细节的交互式源码学习和设计思想分析，并支持将学习笔记转换成不同平台的文章
+description: 根据GitHub链接和代码仓库，提供由浅入深、从架构到细节的交互式源码学习和设计思想分析，并支持将学习笔记转换成不同平台的文章及自动化社交媒体推送
 dependencies:
   - node.js
   - git
   - github-api
+  - twitter-api-v2
 ---
 
 # GitHub源码学习助手

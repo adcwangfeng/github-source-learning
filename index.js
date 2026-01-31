@@ -12,6 +12,7 @@ class GithubSourceLearningAssistant {
     this.exporter = require('./exporter.js');
     this.qaHelper = require('./qa-helper.js');
     this.utils = require('./utils.js');
+    this.xPublisher = require('./x-publisher.js');
   }
 
   /**
@@ -178,6 +179,96 @@ class GithubSourceLearningAssistant {
    */
   getExportFormats() {
     return this.exporter.getSupportedFormats();
+  }
+
+  /**
+   * 发布学习总结到 X.com
+   */
+  async publishToX(sessionId, options = {}) {
+    const progress = this.learningProgress.get(sessionId);
+    if (!progress) {
+      throw new Error('无效的学习会话');
+    }
+
+    if (!this.xPublisher.isEnabled()) {
+      throw new Error('X Publisher 未启用，请配置必要的 API 凭证');
+    }
+
+    try {
+      const notes = await this.noteManager.getNotes(progress.repoInfo.name);
+      const result = await this.xPublisher.publishLearningSummary(
+        progress.repoInfo, 
+        notes, 
+        options
+      );
+
+      return result;
+    } catch (error) {
+      console.error('❌ X 发布失败:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 发布技术文章到 X.com
+   */
+  async publishArticleToX(sessionId, articleContent, options = {}) {
+    const progress = this.learningProgress.get(sessionId);
+    if (!progress) {
+      throw new Error('无效的学习会话');
+    }
+
+    if (!this.xPublisher.isEnabled()) {
+      throw new Error('X Publisher 未启用，请配置必要的 API 凭证');
+    }
+
+    try {
+      const result = await this.xPublisher.publishTechnicalArticle(
+        progress.repoInfo,
+        articleContent,
+        options
+      );
+
+      return result;
+    } catch (error) {
+      console.error('❌ X 文章发布失败:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 发布问答总结到 X.com
+   */
+  async publishQAToX(sessionId, questions, answers, options = {}) {
+    const progress = this.learningProgress.get(sessionId);
+    if (!progress) {
+      throw new Error('无效的学习会话');
+    }
+
+    if (!this.xPublisher.isEnabled()) {
+      throw new Error('X Publisher 未启用，请配置必要的 API 凭证');
+    }
+
+    try {
+      const result = await this.xPublisher.publishQASummary(
+        progress.repoInfo,
+        questions,
+        answers,
+        options
+      );
+
+      return result;
+    } catch (error) {
+      console.error('❌ X 问答发布失败:', error);
+      throw error;
+    }
+  }
+
+  /**
+   * 检查 X Publisher 配置状态
+   */
+  getXConfigStatus() {
+    return this.xPublisher.getConfigStatus();
   }
 }
 

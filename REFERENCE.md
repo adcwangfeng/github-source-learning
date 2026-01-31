@@ -149,6 +149,7 @@ answerQuestion(question, repoInfo)
 - 协调各个组件的工作
 - 管理学习会话状态
 - 提供统一的API接口
+- 集成社交媒体发布功能
 
 #### API接口
 ```javascript
@@ -181,6 +182,25 @@ exportNotes(sessionId, format)
 getLearningStats(sessionId)
 // 参数: sessionId - 会话ID
 // 返回: 学习统计信息
+
+// 发布到X.com
+publishToX(sessionId, options)
+// 参数: sessionId - 会话ID, options - 发布选项
+// 返回: 发布结果
+
+// 发布文章到X.com
+publishArticleToX(sessionId, articleContent, options)
+// 参数: sessionId - 会话ID, articleContent - 文章内容, options - 发布选项
+// 返回: 发布结果
+
+// 发布问答到X.com
+publishQAToX(sessionId, questions, answers, options)
+// 参数: sessionId - 会话ID, questions - 问题列表, answers - 答案列表, options - 发布选项
+// 返回: 发布结果
+
+// 检查X配置状态
+getXConfigStatus()
+// 返回: X Publisher配置状态
 ```
 
 ## 使用流程
